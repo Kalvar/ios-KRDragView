@@ -16,7 +16,8 @@ KRDragView simulates dragging the UIView to move to the screen sides like the me
 {
     krViewDrags = [[KRViewDrags alloc] initWithView:self.outView
                                           drageMode:krViewDragModeFromLeftToRight];
-    krViewDrags.sideInstance = 40.0f;
+    self.krViewDrags.sideInstance = 40.0f;
+    self.krViewDrags.durations    = 0.15f;
     [super viewDidLoad];
 }
 

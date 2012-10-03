@@ -23,6 +23,7 @@
     krViewDrags = [[KRViewDrags alloc] initWithView:self.outView
                                           drageMode:krViewDragModeFromLeftToRight];
     self.krViewDrags.sideInstance = 40.0f;
+    self.krViewDrags.durations    = 0.15f;
     [super viewDidLoad];
 }
 

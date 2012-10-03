@@ -26,11 +26,14 @@ typedef enum _krViewDragModes {
     krViewDragModes dragMode;
     //距離螢幕邊緣多遠就定位
     CGFloat sideInstance;
+    //最後定位的動畫時間
+    CGFloat durations;
 }
 
 @property (nonatomic, retain) UIView *view;
 @property (nonatomic, assign) krViewDragModes dragMode;
 @property (nonatomic, assign) CGFloat sideInstance;
+@property (nonatomic, assign) CGFloat durations;
 
 -(id)initWithView:(UIView *)_targetView drageMode:(krViewDragModes)_dragMode;
 -(void)start;

@@ -36,10 +36,13 @@
 @implementation KRViewDrags (fixDrages)
 
 -(void)_initWithVars{
-    self._gestureView   = self.view;
-    self._orignalPoints = self._gestureView.center;
-    self.sideInstance   = 40.0f;
-    [self _resetMatchPoints];
+    if( self.view ){
+        self._gestureView   = self.view;
+        self._orignalPoints = self._gestureView.center;
+        [self _resetMatchPoints];
+    }
+    self.sideInstance = 40.0f;
+    self.durations    = 0.2f;
 }
 
 -(void)_resetMatchPoints{
@@ -83,7 +86,7 @@
              toY:(CGFloat)_toY
 {
     [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.2f];
+    [UIView setAnimationDuration:self.durations];
     [UIView setAnimationDelegate:self];
     [UIView setAnimationBeginsFromCurrentState:YES];
     _targetView.frame = CGRectMake(_toX,
@@ -217,11 +220,13 @@
 @synthesize view;
 @synthesize dragMode;
 @synthesize sideInstance;
+@synthesize durations;
 
 -(id)init{
     self = [super init];
     if( self ){
         self.view = nil;
+        [self _initWithVars];
     }
     return self;
 }
