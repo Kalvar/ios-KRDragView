@@ -17,6 +17,7 @@
 @property (nonatomic, assign) CGPoint _matchPoints;
 @property (nonatomic, retain) UIPanGestureRecognizer *_panGestureRecognizer;
 @property (nonatomic, assign) UIView *_gestureView;
+@property (nonatomic, assign) BOOL _isOpening;
 
 @end
 
@@ -27,6 +28,7 @@
 -(void)_addViewDragGesture;
 -(void)_removeViewDrageGesture;
 -(void)_moveView:(UIView *)_targetView toX:(CGFloat)_toX toY:(CGFloat)_toY;
+-(void)_finalDragging:(CGPoint)_viewCenter;
 -(void)_handleDrag:(UIPanGestureRecognizer*)_panGesture;
 -(CGFloat)_statusBarHeight;
 -(CGFloat)_caculateDiffViewCenterChanged;
@@ -43,6 +45,7 @@
     }
     self.sideInstance = 40.0f;
     self.durations    = 0.2f;
+    self._isOpening   = NO;
 }
 
 -(void)_resetMatchPoints{
@@ -96,6 +99,44 @@
     [UIView commitAnimations];
 }
 
+-(void)_finalDragging:(CGPoint)_viewCenter{
+    CGFloat _screenWidth  = self._gestureView.frame.size.width;
+    CGFloat _moveDistance = 0.0f;
+    BOOL _throughCenter    = NO;
+    switch (self.dragMode) {
+        case krViewDragModeFromLeftToRight:
+            _moveDistance  = _screenWidth - self.sideInstance;
+            //檢查 X 是否已過中線
+            _throughCenter = ( _viewCenter.x > _screenWidth / 2 );
+            break;
+        case krViewDragModeFromRightToLeft:
+            _moveDistance  = -(_screenWidth - self.sideInstance);
+            _throughCenter = ( _viewCenter.x < -( _screenWidth / 2 ) );
+            break;
+        case krViewDragModeBoth:
+            //... Nothing else ( Waiting for add the codes. )
+            //...
+            self._isOpening = NO;
+            break;
+        default:
+            break;
+    }
+    if( _throughCenter ){
+        //打開
+        [self _moveView:self._gestureView toX:_moveDistance toY:0.0f];
+        self._isOpening = YES;
+    }else{
+        //回到原點
+        [self _moveView:self._gestureView toX:0.0f toY:0.0f];
+        self._isOpening = NO;
+    }
+}
+
+/*
+ * @Bugs
+ *   
+ */
+
 -(void)_handleDrag:(UIPanGestureRecognizer*)_panGesture
 {
     //目前手勢 View 的中心位置
@@ -120,29 +161,6 @@
              * 只允許往右移動
              */
             if( translation.x < 0 && viewCenter.x <= 0 ) return;
-            //拖拉移動
-            if (_panGesture.state == UIGestureRecognizerStateChanged) {
-                if( center.y == self._matchPoints.y ){
-                    center = CGPointMake(center.x + translation.x,
-                                         self._matchPoints.y);
-                    _panGesture.view.center = center;
-                    [_panGesture setTranslation:CGPointZero inView:_panGesture.view];
-                }
-            }
-            
-            //結束觸碰
-            if(_panGesture.state == UIGestureRecognizerStateEnded){
-                CGFloat _screenWidth  = self._gestureView.frame.size.width;
-                CGFloat _moveDistance = _screenWidth - self.sideInstance;
-                //檢查 X 是否已過中線
-                if( viewCenter.x > _screenWidth / 2 ){
-                    //打開
-                    [self _moveView:self._gestureView toX:_moveDistance toY:0.0f];
-                }else{
-                    //回到原點
-                    [self _moveView:self._gestureView toX:0.0f toY:0.0f];
-                }
-            }
             break;
         case krViewDragModeFromRightToLeft:
             /*
@@ -153,37 +171,27 @@
              * 不允許上下移動
              */
             //if( translation.y != self._orignalPoints.y ) return;
-            //拖拉移動
-            if (_panGesture.state == UIGestureRecognizerStateChanged) {
-                if( center.y == self._matchPoints.y ){
-                    center = CGPointMake(center.x + translation.x,
-                                         self._matchPoints.y);
-                    _panGesture.view.center = center;
-                    [_panGesture setTranslation:CGPointZero inView:_panGesture.view];
-                }
-            }
-            
-            //結束觸碰
-            if(_panGesture.state == UIGestureRecognizerStateEnded){
-                CGFloat _screenWidth  = self._gestureView.frame.size.width;
-                CGFloat _moveDistance = -(_screenWidth - self.sideInstance);
-                //檢查 X 是否已過中線
-                if( viewCenter.x < -( _screenWidth / 2 ) ){
-                    //打開
-                    [self _moveView:self._gestureView toX:_moveDistance toY:0.0f];
-                }else{
-                    //回到原點
-                    [self _moveView:self._gestureView toX:0.0f toY:0.0f];
-                }
-            }
             break;
         case krViewDragModeBoth:
             //... Nothing else ( Waiting for add the codes. )
             //...
             break;
         default:
-            
             break;
+    }
+    //拖拉移動
+    if (_panGesture.state == UIGestureRecognizerStateChanged) {
+        if( center.y == self._matchPoints.y ){
+            //NSLog(@"center.x : %f", center.x);
+            //NSLog(@"translation.x : %f\n\n", translation.x);
+            center = CGPointMake(center.x + translation.x, self._matchPoints.y);
+            _panGesture.view.center = center;
+            [_panGesture setTranslation:CGPointZero inView:_panGesture.view];
+        }
+    }
+    //結束觸碰
+    if(_panGesture.state == UIGestureRecognizerStateEnded){
+        [self _finalDragging:viewCenter];
     }
 }
 
@@ -231,7 +239,7 @@
     return self;
 }
 
--(id)initWithView:(UIView *)_targetView drageMode:(krViewDragModes)_dragMode{
+-(id)initWithView:(UIView *)_targetView dragMode:(krViewDragModes)_dragMode{
     self = [super init];
     if( self ){
         self.view     = _targetView;
@@ -262,6 +270,30 @@
     [self _removeViewDrageGesture];
     [self _initWithVars];
     [self _allocPanGesture];
+}
+
+-(void)open{
+    CGFloat _screenWidth  = self._gestureView.frame.size.width;
+    CGFloat _moveDistance = 0.0f;
+    switch (self.dragMode) {
+        case krViewDragModeFromLeftToRight:
+            _moveDistance = _screenWidth - self.sideInstance;
+            break;
+        case krViewDragModeFromRightToLeft:
+            _moveDistance = -(_screenWidth - self.sideInstance);
+            break;
+        case krViewDragModeBoth:
+            //...
+            break;
+        default:
+            break;
+    }
+    if( self._isOpening ){
+        [self _moveView:self._gestureView toX:0.0f toY:0.0f];
+    }else{
+        [self _moveView:self._gestureView toX:_moveDistance toY:0.0f];
+    }
+    self._isOpening = !self._isOpening;
 }
 
 @end

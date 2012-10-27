@@ -21,7 +21,7 @@
 - (void)viewDidLoad
 {
     krViewDrags = [[KRViewDrags alloc] initWithView:self.outView
-                                          drageMode:krViewDragModeFromLeftToRight];
+                                           dragMode:krViewDragModeFromLeftToRight];
     self.krViewDrags.sideInstance = 40.0f;
     self.krViewDrags.durations    = 0.15f;
     [super viewDidLoad];
@@ -46,6 +46,11 @@
     [krViewDrags release];
     [outView release];
     [super dealloc];
+}
+
+#pragma IBActions
+-(IBAction)open:(id)sender{
+    [self.krViewDrags open];
 }
 
 @end

@@ -35,9 +35,10 @@ typedef enum _krViewDragModes {
 @property (nonatomic, assign) CGFloat sideInstance;
 @property (nonatomic, assign) CGFloat durations;
 
--(id)initWithView:(UIView *)_targetView drageMode:(krViewDragModes)_dragMode;
+-(id)initWithView:(UIView *)_targetView dragMode:(krViewDragModes)_dragMode;
 -(void)start;
 -(void)stop;
 -(void)reset;
+-(void)open;
 
 @end

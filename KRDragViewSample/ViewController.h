@@ -17,4 +17,6 @@
 @property (nonatomic, retain) KRViewDrags *krViewDrags;
 @property (nonatomic, retain) IBOutlet UIView *outView;
 
+-(IBAction)open:(id)sender;
+
 @end
