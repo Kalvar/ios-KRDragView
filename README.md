@@ -34,7 +34,7 @@ KRDragView simulates dragging the UIView to move to the screen sides like the me
 
 ## Version
 
-KRDragView now is V0.5 beta.
+KRDragView now is V0.5.1 beta.
 
 ## License
 
