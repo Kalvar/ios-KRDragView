@@ -10,12 +10,15 @@
 
 @interface KRViewDrags (){
     UIPanGestureRecognizer *_panGestureRecognizer;
-    
+    UISwipeGestureRecognizer *_leftGestureRecognizer;
+    UISwipeGestureRecognizer *_rightGestureRecognizer;
 }
 
 @property (nonatomic, assign) CGPoint _orignalPoints;
 @property (nonatomic, assign) CGPoint _matchPoints;
 @property (nonatomic, retain) UIPanGestureRecognizer *_panGestureRecognizer;
+@property (nonatomic, retain) UISwipeGestureRecognizer *_leftGestureRecognizer;
+@property (nonatomic, retain) UISwipeGestureRecognizer *_rightGestureRecognizer;
 @property (nonatomic, assign) UIView *_gestureView;
 @property (nonatomic, assign) BOOL _isOpening;
 
@@ -30,6 +33,10 @@
 -(void)_moveView:(UIView *)_targetView toX:(CGFloat)_toX toY:(CGFloat)_toY;
 -(void)_finalDragging:(CGPoint)_viewCenter;
 -(void)_handleDrag:(UIPanGestureRecognizer*)_panGesture;
+-(void)_allocSwipeGesture;
+-(void)_addViewSwipeGesture;
+-(void)_removeViewSwipeGesture;
+-(void)_handleSwipe:(UISwipeGestureRecognizer *)_swipeGesture;
 -(CGFloat)_statusBarHeight;
 -(CGFloat)_caculateDiffViewCenterChanged;
 
@@ -134,7 +141,7 @@
 
 /*
  * @Bugs
- *   
+ *   1). 在快速移動至原點( 0, 0 )時，會出現超出原點範圍的跑版情形。
  */
 
 -(void)_handleDrag:(UIPanGestureRecognizer*)_panGesture
@@ -195,6 +202,55 @@
     }
 }
 
+/*
+ * @Problem
+ *   這裡的 Swipe 手勢會跟 Drag ( Pan ) 的手勢互衝，而無明顯之作用 ( 僅偶有作用 )。
+ *   故暫時先不使用。
+ */
+-(void)_allocSwipeGesture{
+    //只 alloc 一次
+    if( !_leftGestureRecognizer ){
+        _leftGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                                           action:@selector(_handleSwipe:)];
+        [_leftGestureRecognizer setDirection:UISwipeGestureRecognizerDirectionLeft];
+    }
+    if( !_rightGestureRecognizer ){
+        _rightGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                                            action:@selector(_handleSwipe:)];
+        [_rightGestureRecognizer setDirection:UISwipeGestureRecognizerDirectionRight];
+    }
+}
+
+-(void)_addViewSwipeGesture{
+    //向左滑
+    [self._gestureView addGestureRecognizer:self._leftGestureRecognizer];
+    //向右滑
+    [self._gestureView addGestureRecognizer:self._rightGestureRecognizer];
+}
+
+-(void)_removeViewSwipeGesture{
+    [self._gestureView removeGestureRecognizer:self._leftGestureRecognizer];
+    [self._gestureView removeGestureRecognizer:self._rightGestureRecognizer];
+}
+
+-(void)_handleSwipe:(UISwipeGestureRecognizer *)_swipeGesture{
+    //確定是滑動手勢
+    if( [_swipeGesture isKindOfClass:[UISwipeGestureRecognizer class]] ){
+        //鎖定只允許左右滑動
+        UISwipeGestureRecognizerDirection _state = [(UISwipeGestureRecognizer *)_swipeGesture direction];
+        switch ( _state ) {
+            case UISwipeGestureRecognizerDirectionLeft:
+                [self open];
+                break;
+            case UISwipeGestureRecognizerDirectionRight:
+                [self open];
+                break;
+            default:
+                break;
+        }
+    }
+}
+
 -(CGFloat)_statusBarHeight{
     CGSize _size = [UIApplication sharedApplication].statusBarFrame.size;
     //NSLog(@"%f", _size.height);
@@ -223,6 +279,8 @@
 @synthesize _orignalPoints;
 @synthesize _matchPoints;
 @synthesize _panGestureRecognizer;
+@synthesize _leftGestureRecognizer;
+@synthesize _rightGestureRecognizer;
 @synthesize _gestureView;
 
 @synthesize view;
@@ -235,6 +293,8 @@
     if( self ){
         self.view = nil;
         [self _initWithVars];
+        [self _allocPanGesture];
+        //[self _allocSwipeGesture];
     }
     return self;
 }
@@ -246,6 +306,7 @@
         self.dragMode = _dragMode;
         [self _initWithVars];
         [self _allocPanGesture];
+        //[self _allocSwipeGesture];
     }
     return self;
 }
@@ -253,6 +314,8 @@
 -(void)dealloc{
     [view release];
     [_panGestureRecognizer release];
+    [_leftGestureRecognizer release];
+    [_rightGestureRecognizer release];
     
     [super dealloc];
 }
@@ -260,16 +323,20 @@
 #pragma Methods
 -(void)start{
     [self _addViewDragGesture];
+    //[self _addViewSwipeGesture];
 }
 
 -(void)stop{
     [self _removeViewDrageGesture];
+    //[self _removeViewSwipeGesture];
 }
 
 -(void)reset{
     [self _removeViewDrageGesture];
+    //[self _removeViewSwipeGesture];
     [self _initWithVars];
     [self _allocPanGesture];
+    //[self _allocSwipeGesture];
 }
 
 -(void)open{
