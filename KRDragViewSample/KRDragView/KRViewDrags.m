@@ -1,9 +1,10 @@
 //
 //  KRViewDrags.m
 //  
+//  ilovekalvar@gmail.com
 //
-//  Created by Kalvar on 12/10/2.
-//  Copyright (c) 2012年 Flashaim Inc. All rights reserved.
+//  Created by Kuo-Ming Lin on 12/10/2.
+//  Copyright (c) 2012年 Kuo-Ming Lin. All rights reserved.
 //
 
 #import "KRViewDrags.h"
@@ -95,15 +96,14 @@
              toX:(CGFloat)_toX
              toY:(CGFloat)_toY
 {
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:self.durations];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-    _targetView.frame = CGRectMake(_toX,
-                                   _toY,
-                                   _targetView.frame.size.width,
-                                   _targetView.frame.size.height);
-    [UIView commitAnimations];
+    [UIView animateWithDuration:self.durations delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        _targetView.frame = CGRectMake(_toX,
+                                       _toY,
+                                       _targetView.frame.size.width,
+                                       _targetView.frame.size.height);
+    } completion:^(BOOL finished) {
+        // ...
+    }];
 }
 
 -(void)_finalDragging:(CGPoint)_viewCenter{
