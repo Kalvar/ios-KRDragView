@@ -9,7 +9,8 @@
 
 #import "KRViewDrags.h"
 
-@interface KRViewDrags (){
+@interface KRViewDrags ()
+{
     UIPanGestureRecognizer *_panGestureRecognizer;
     UISwipeGestureRecognizer *_leftGestureRecognizer;
     UISwipeGestureRecognizer *_rightGestureRecognizer;
@@ -17,10 +18,10 @@
 
 @property (nonatomic, assign) CGPoint _orignalPoints;
 @property (nonatomic, assign) CGPoint _matchPoints;
-@property (nonatomic, retain) UIPanGestureRecognizer *_panGestureRecognizer;
-@property (nonatomic, retain) UISwipeGestureRecognizer *_leftGestureRecognizer;
-@property (nonatomic, retain) UISwipeGestureRecognizer *_rightGestureRecognizer;
-@property (nonatomic, assign) UIView *_gestureView;
+@property (nonatomic, strong) UIPanGestureRecognizer *_panGestureRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *_leftGestureRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *_rightGestureRecognizer;
+@property (nonatomic, strong) UIView *_gestureView;
 @property (nonatomic, assign) BOOL _isOpening;
 
 @end
@@ -311,14 +312,6 @@
     return self;
 }
 
--(void)dealloc{
-    [view release];
-    [_panGestureRecognizer release];
-    [_leftGestureRecognizer release];
-    [_rightGestureRecognizer release];
-    
-    [super dealloc];
-}
 
 #pragma Methods
 -(void)start{

@@ -14,8 +14,8 @@
 
 @interface ViewController : UIViewController
 
-@property (nonatomic, retain) KRViewDrags *krViewDrags;
-@property (nonatomic, retain) IBOutlet UIView *outView;
+@property (nonatomic, strong) KRViewDrags *krViewDrags;
+@property (nonatomic, strong) IBOutlet UIView *outView;
 
 -(IBAction)open:(id)sender;
 

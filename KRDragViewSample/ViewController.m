@@ -20,21 +20,23 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
     krViewDrags = [[KRViewDrags alloc] initWithView:self.outView
                                            dragMode:krViewDragModeFromLeftToRight];
     self.krViewDrags.sideInstance = 40.0f;
     self.krViewDrags.durations    = 0.15f;
-    [super viewDidLoad];
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    [self.krViewDrags start];
+-(void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:animated];
+    [self.krViewDrags start];
 }
 
--(void)viewWillDisappear:(BOOL)animated{
-    [self.krViewDrags stop];
+-(void)viewWillDisappear:(BOOL)animated
+{
     [super viewWillDisappear:animated];
+    [self.krViewDrags stop];
 }
 
 - (void)didReceiveMemoryWarning
@@ -42,14 +44,9 @@
     [super didReceiveMemoryWarning];
 }
 
--(void)dealloc{
-    [krViewDrags release];
-    [outView release];
-    [super dealloc];
-}
-
 #pragma IBActions
--(IBAction)open:(id)sender{
+-(IBAction)open:(id)sender
+{
     [self.krViewDrags open];
 }
 
