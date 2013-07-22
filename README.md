@@ -15,33 +15,41 @@ KRDragView simulates dragging and sliding the view to show the menu under backgr
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    krViewDrags = [[KRViewDrags alloc] initWithView:self.outView
-                                           dragMode:krViewDragModeFromLeftToRight];
-    self.krViewDrags.sideInstance = 40.0f;
-    self.krViewDrags.durations    = 0.15f;
+    krDragViews = [[KRDragView alloc] initWithView:self.outView
+                                           dragMode:krDragViewModeFromLeftToRight];
+    self.krDragViews.sideInstance = 40.0f;
+    self.krDragViews.durations    = 0.15f;
+    //To set the distance of cross central line.
+    self.krDragViews.openDistance = self.view.frame.size.height / 2; //80.0f
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.krViewDrags start];
+    [self.krDragViews start];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self.krViewDrags stop];
+    [self.krDragViews stop];
 }
 
+#pragma IBActions
 -(IBAction)open:(id)sender
 {
-    [self.krViewDrags open];
+    [self.krDragViews open];
+}
+
+-(IBAction)back:(id)sender
+{
+    [self.krDragViews backToInitialState];
 }
 ```
 
 ## Version
 
-KRDragView now is V0.5.2 beta.
+KRDragView now is V0.7 beta.
 
 ## License
 

@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "KRViewDrags.h"
+#import "KRDragView.h"
 
 @interface ViewController ()
 
@@ -15,28 +15,30 @@
 
 @implementation ViewController
 
-@synthesize krViewDrags;
+@synthesize krDragViews;
 @synthesize outView;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    krViewDrags = [[KRViewDrags alloc] initWithView:self.outView
-                                           dragMode:krViewDragModeFromLeftToRight];
-    self.krViewDrags.sideInstance = 40.0f;
-    self.krViewDrags.durations    = 0.15f;
+    krDragViews = [[KRDragView alloc] initWithView:self.outView
+                                           dragMode:krDragViewModeFromLeftToRight];
+    self.krDragViews.sideInstance = 40.0f;
+    self.krDragViews.durations    = 0.15f;
+    //To set the distance of cross central line.
+    self.krDragViews.openDistance = self.view.frame.size.height / 2; //80.0f
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.krViewDrags start];
+    [self.krDragViews start];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self.krViewDrags stop];
+    [self.krDragViews stop];
 }
 
 - (void)didReceiveMemoryWarning
@@ -47,7 +49,12 @@
 #pragma IBActions
 -(IBAction)open:(id)sender
 {
-    [self.krViewDrags open];
+    [self.krDragViews open];
+}
+
+-(IBAction)back:(id)sender
+{
+    [self.krDragViews backToInitialState];
 }
 
 @end

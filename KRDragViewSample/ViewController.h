@@ -10,13 +10,14 @@
 
 #import <UIKit/UIKit.h>
 
-@class KRViewDrags;
+@class KRDragView;
 
 @interface ViewController : UIViewController
 
-@property (nonatomic, strong) KRViewDrags *krViewDrags;
+@property (nonatomic, strong) KRDragView *krDragViews;
 @property (nonatomic, strong) IBOutlet UIView *outView;
 
 -(IBAction)open:(id)sender;
+-(IBAction)back:(id)sender;
 
 @end

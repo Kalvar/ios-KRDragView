@@ -18,7 +18,7 @@
 		8EA3B4D6161ADDAA0000E5F5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EA3B4D5161ADDAA0000E5F5 /* Default-568h@2x.png */; };
 		8EA3B4D9161ADDAA0000E5F5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA3B4D8161ADDAA0000E5F5 /* ViewController.m */; };
 		8EA3B4DC161ADDAA0000E5F5 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EA3B4DA161ADDAA0000E5F5 /* ViewController.xib */; };
-		8EA3B4E5161ADDE30000E5F5 /* KRViewDrags.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA3B4E4161ADDE30000E5F5 /* KRViewDrags.m */; };
+		8EA3B4E5161ADDE30000E5F5 /* KRDragView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA3B4E4161ADDE30000E5F5 /* KRDragView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,8 +38,8 @@
 		8EA3B4D7161ADDAA0000E5F5 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		8EA3B4D8161ADDAA0000E5F5 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		8EA3B4DB161ADDAA0000E5F5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
-		8EA3B4E3161ADDE30000E5F5 /* KRViewDrags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRViewDrags.h; sourceTree = "<group>"; };
-		8EA3B4E4161ADDE30000E5F5 /* KRViewDrags.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRViewDrags.m; sourceTree = "<group>"; };
+		8EA3B4E3161ADDE30000E5F5 /* KRDragView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRDragView.h; sourceTree = "<group>"; };
+		8EA3B4E4161ADDE30000E5F5 /* KRDragView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRDragView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,8 +115,8 @@
 		8EA3B4E2161ADDE30000E5F5 /* KRDragView */ = {
 			isa = PBXGroup;
 			children = (
-				8EA3B4E3161ADDE30000E5F5 /* KRViewDrags.h */,
-				8EA3B4E4161ADDE30000E5F5 /* KRViewDrags.m */,
+				8EA3B4E3161ADDE30000E5F5 /* KRDragView.h */,
+				8EA3B4E4161ADDE30000E5F5 /* KRDragView.m */,
 			);
 			name = KRDragView;
 			path = KRDragViewSample/KRDragView;
@@ -191,7 +191,7 @@
 				8EA3B4CC161ADDAA0000E5F5 /* main.m in Sources */,
 				8EA3B4D0161ADDAA0000E5F5 /* AppDelegate.m in Sources */,
 				8EA3B4D9161ADDAA0000E5F5 /* ViewController.m in Sources */,
-				8EA3B4E5161ADDE30000E5F5 /* KRViewDrags.m in Sources */,
+				8EA3B4E5161ADDE30000E5F5 /* KRDragView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
