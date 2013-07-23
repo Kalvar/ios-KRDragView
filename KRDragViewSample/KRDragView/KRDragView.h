@@ -41,6 +41,9 @@ typedef enum _krDragViewModes
     CGFloat durations;
     //決定是否 Open 的跨越距離
     CGFloat openDistance;
+    //開關 View 後的動作
+    void (^openCompletion) (void);
+    void (^closeCompletion) (void);
 }
 
 @property (nonatomic, strong) UIView *view;
@@ -48,6 +51,8 @@ typedef enum _krDragViewModes
 @property (nonatomic, assign) CGFloat sideInstance;
 @property (nonatomic, assign) CGFloat durations;
 @property (nonatomic, assign) CGFloat openDistance;
+@property (nonatomic, copy) void (^openCompletion) (void);
+@property (nonatomic, copy) void (^closeCompletion) (void);
 
 -(id)initWithView:(UIView *)_targetView dragMode:(krDragViewModes)_dragMode;
 -(void)start;

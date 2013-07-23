@@ -68,6 +68,8 @@
     self.sideInstance  = 40.0f;
     self.durations     = 0.2f;
     self.openDistance  = 0.0f;
+    self.openCompletion  = nil;
+    self.closeCompletion = nil;
     self._isOpening    = NO;
     self._lastPosition = 0.0f;
 }
@@ -209,6 +211,10 @@
         //[self _moveView:self._gestureView toX:0.0f toY:0.0f];
         [self _moveView:self._gestureView toX:self._initialPoints.x toY:self._initialPoints.y];
         self._isOpening = NO;
+        if( self.closeCompletion )
+        {
+            self.closeCompletion();
+        }
     }
 }
 
@@ -387,6 +393,10 @@
     if( self._isOpening )
     {
         [self _moveView:self._gestureView toX:0.0f toY:0.0f];
+        if( self.closeCompletion )
+        {
+            self.closeCompletion();
+        }
     }
     else
     {
@@ -397,6 +407,10 @@
         else
         {
             [self _moveView:self._gestureView toX:0.0f toY:_moveDistance];
+        }
+        if( self.openCompletion )
+        {
+            self.openCompletion();
         }
     }
     self._isOpening = !self._isOpening;
@@ -497,6 +511,8 @@
 @synthesize sideInstance;
 @synthesize durations;
 @synthesize openDistance;
+@synthesize openCompletion  = _openCompletion;
+@synthesize closeCompletion = _closeCompletion;
 
 -(id)init
 {
@@ -586,7 +602,15 @@
 
 -(void)backToInitialState
 {
+    if( self._gestureView.frame.origin.x == self._initialPoints.x && self._gestureView.frame.origin.y == self._initialPoints.y )
+    {
+        return;
+    }
     [self _moveView:self._gestureView toX:self._initialPoints.x toY:self._initialPoints.y];
+    if( self.closeCompletion )
+    {
+        self.closeCompletion();
+    }
 }
 
 @end

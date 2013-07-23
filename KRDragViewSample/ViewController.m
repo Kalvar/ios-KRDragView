@@ -23,10 +23,16 @@
     [super viewDidLoad];
     krDragViews = [[KRDragView alloc] initWithView:self.outView
                                            dragMode:krDragViewModeToTopAllowsDraggingBack];
-    self.krDragViews.sideInstance = self.view.frame.size.height; //40.0f;
-    self.krDragViews.durations    = 0.15f;
+    self.krDragViews.sideInstance   = self.view.frame.size.height; //40.0f;
+    self.krDragViews.durations      = 0.15f;
     //To set the distance of cross central line.
-    self.krDragViews.openDistance = 80.0f; //self.view.frame.size.height / 2;
+    self.krDragViews.openDistance   = 80.0f; //self.view.frame.size.height / 2;
+    self.krDragViews.openCompletion = ^{
+        NSLog(@"open");
+    };
+    self.krDragViews.closeCompletion = ^{
+        NSLog(@"close");
+    };
     [self.krDragViews start];
 }
 
