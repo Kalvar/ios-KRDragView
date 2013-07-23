@@ -21,12 +21,12 @@ KRDragView simulates dragging and sliding the view to show the menu under backgr
     self.krDragViews.durations    = 0.15f;
     //To set the distance of cross central line.
     self.krDragViews.openDistance = self.view.frame.size.height / 2; //80.0f
+    [self.krDragViews start];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.krDragViews start];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
