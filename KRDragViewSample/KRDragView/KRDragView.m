@@ -400,6 +400,10 @@
     }
     else
     {
+        if( self.openCompletion )
+        {
+            self.openCompletion();
+        }
         if( _isLeftOrRight )
         {
             [self _moveView:self._gestureView toX:_moveDistance toY:0.0f];
@@ -407,10 +411,6 @@
         else
         {
             [self _moveView:self._gestureView toX:0.0f toY:_moveDistance];
-        }
-        if( self.openCompletion )
-        {
-            self.openCompletion();
         }
     }
     self._isOpening = !self._isOpening;
