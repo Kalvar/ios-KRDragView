@@ -210,11 +210,15 @@
         //回到原點
         //[self _moveView:self._gestureView toX:0.0f toY:0.0f];
         [self _moveView:self._gestureView toX:self._initialPoints.x toY:self._initialPoints.y];
-        self._isOpening = NO;
-        if( self.closeCompletion )
+        //沒有打開過，就不執行 Close Block
+        if( self._isOpening )
         {
-            self.closeCompletion();
+            if( self.closeCompletion )
+            {
+                self.closeCompletion();
+            }
         }
+        self._isOpening = NO;
     }
 }
 
