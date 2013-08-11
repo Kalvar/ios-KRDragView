@@ -27,7 +27,7 @@
 @property (nonatomic, assign) CGFloat _lastPosition;
 
 #pragma --mark 以下參數暫時用不到
-//2013.07.22 PM 23:48
+//2013.07.21 PM 20:32
 @property (nonatomic, strong) UISwipeGestureRecognizer *_leftGestureRecognizer;
 @property (nonatomic, strong) UISwipeGestureRecognizer *_rightGestureRecognizer;
 @property (nonatomic, strong) UISwipeGestureRecognizer *_downGestureRecognizer;
@@ -42,6 +42,7 @@
 -(void)_addViewDragGesture;
 -(void)_removeViewDrageGesture;
 -(void)_moveView:(UIView *)_targetView toX:(CGFloat)_toX toY:(CGFloat)_toY;
+-(void)_moveView:(UIView *)_targetView toX:(CGFloat)_toX toY:(CGFloat)_toY completionBlock:(void(^)(void))_completionBlock;
 -(void)_finalDragging:(CGPoint)_viewCenter;
 -(void)_handleDrag:(UIPanGestureRecognizer*)_panGesture;
 -(void)_allocSwipeGesture;
@@ -91,7 +92,7 @@
     /*
      //因應 StatusBar 的變化所寫的
      self._matchPoints = CGPointMake(self._orignalPoints.x,
-                                    ( self._orignalPoints.y - [self _caculateDiffViewCenterChanged] ));
+     ( self._orignalPoints.y - [self _caculateDiffViewCenterChanged] ));
      */
     
 }
@@ -114,9 +115,12 @@
     [self._gestureView removeGestureRecognizer:self._panGestureRecognizer];
 }
 
--(void)_moveView:(UIView *)_targetView
-             toX:(CGFloat)_toX
-             toY:(CGFloat)_toY
+-(void)_moveView:(UIView *)_targetView toX:(CGFloat)_toX toY:(CGFloat)_toY
+{
+    [self _moveView:_targetView toX:_toX toY:_toY completionBlock:nil];
+}
+
+-(void)_moveView:(UIView *)_targetView toX:(CGFloat)_toX toY:(CGFloat)_toY completionBlock:(void(^)(void))_completionBlock
 {
     [UIView animateWithDuration:self.durations delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         _targetView.frame = CGRectMake(_toX,
@@ -124,12 +128,15 @@
                                        _targetView.frame.size.width,
                                        _targetView.frame.size.height);
     } completion:^(BOOL finished) {
-        // ...
+        if( _completionBlock )
+        {
+            _completionBlock();
+        }
     }];
 }
 
 -(void)_finalDragging:(CGPoint)_viewCenter
-{ 
+{
     CGFloat _screenWidth  = self._gestureView.frame.size.width;
     CGFloat _screenHeight = self._gestureView.frame.size.height;
     CGFloat _moveDistance = 0.0f;
@@ -209,14 +216,14 @@
     {
         //回到原點
         //[self _moveView:self._gestureView toX:0.0f toY:0.0f];
-        [self _moveView:self._gestureView toX:self._initialPoints.x toY:self._initialPoints.y];
         //沒有打開過，就不執行 Close Block
         if( self._isOpening )
         {
-            if( self.closeCompletion )
-            {
-                self.closeCompletion();
-            }
+            [self _moveView:self._gestureView toX:self._initialPoints.x toY:self._initialPoints.y completionBlock:self.closeCompletion];
+        }
+        else
+        {
+            [self _moveView:self._gestureView toX:self._initialPoints.x toY:self._initialPoints.y];
         }
         self._isOpening = NO;
     }
@@ -396,25 +403,17 @@
 {
     if( self._isOpening )
     {
-        [self _moveView:self._gestureView toX:0.0f toY:0.0f];
-        if( self.closeCompletion )
-        {
-            self.closeCompletion();
-        }
+        [self _moveView:self._gestureView toX:0.0f toY:0.0f completionBlock:self.closeCompletion];
     }
     else
     {
-        if( self.openCompletion )
-        {
-            self.openCompletion();
-        }
         if( _isLeftOrRight )
         {
-            [self _moveView:self._gestureView toX:_moveDistance toY:0.0f];
+            [self _moveView:self._gestureView toX:_moveDistance toY:0.0f completionBlock:self.openCompletion];
         }
         else
         {
-            [self _moveView:self._gestureView toX:0.0f toY:_moveDistance];
+            [self _moveView:self._gestureView toX:0.0f toY:_moveDistance completionBlock:self.openCompletion];
         }
     }
     self._isOpening = !self._isOpening;
@@ -569,7 +568,7 @@
 }
 
 /*
- * @ 直接左右上下開合
+ * @ 直接左右上下開合 ( toogle open / close )
  */
 -(void)open
 {
@@ -615,11 +614,8 @@
     {
         return;
     }
-    [self _moveView:self._gestureView toX:self._initialPoints.x toY:self._initialPoints.y];
-    if( self.closeCompletion )
-    {
-        self.closeCompletion();
-    }
+    self._isOpening = NO;
+    [self _moveView:self._gestureView toX:self._initialPoints.x toY:self._initialPoints.y completionBlock:self.closeCompletion];
 }
 
 @end
