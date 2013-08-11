@@ -59,6 +59,7 @@ typedef enum _krDragViewModes
 -(void)stop;
 -(void)reset;
 -(void)open;
+-(void)close;
 -(void)backToInitialState;
 
 @end

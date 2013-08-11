@@ -604,6 +604,11 @@
     [self _moveGestureViewWithDistance:_moveDistance isLeftOrRight:_isLeftOrRight];
 }
 
+-(void)close
+{
+    [self backToInitialState];
+}
+
 -(void)backToInitialState
 {
     if( self._gestureView.frame.origin.x == self._initialPoints.x && self._gestureView.frame.origin.y == self._initialPoints.y )
