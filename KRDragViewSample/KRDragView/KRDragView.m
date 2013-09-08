@@ -25,7 +25,6 @@
 @property (nonatomic, strong) UIPanGestureRecognizer *_panGestureRecognizer;
 @property (nonatomic, strong) UIView *_gestureView;
 @property (nonatomic, assign) BOOL _isOpening;
-@property (nonatomic, assign) CGFloat _lastPosition;
 
 #pragma --mark 以下參數暫時用不到
 //2013.07.21 PM 20:32
@@ -67,13 +66,12 @@
         self._initialPoints = self._gestureView.frame.origin;
         [self _resetMatchPoints];
     }
-    self.sideInstance  = 40.0f;
-    self.durations     = 0.2f;
-    self.openDistance  = 0.0f;
+    self.sideInstance    = 40.0f;
+    self.durations       = 0.2f;
+    self.openDistance    = 0.0f;
     self.openCompletion  = nil;
     self.closeCompletion = nil;
-    self._isOpening    = NO;
-    self._lastPosition = 0.0f;
+    self._isOpening      = NO;
 }
 
 -(void)_resetMatchPoints
@@ -88,7 +86,7 @@
     {
         _yOffset = self._gestureView.center.y - self._orignalPoints.y;
     }
-    self._matchPoints = CGPointMake(  self._orignalPoints.x,
+    self._matchPoints = CGPointMake (  self._orignalPoints.x,
                                     ( self._orignalPoints.y + _yOffset ));
     /*
      //因應 StatusBar 的變化所寫的
@@ -525,7 +523,6 @@
 @synthesize _downGestureRecognizer;
 @synthesize _upGestureRecognizer;
 @synthesize _gestureView;
-@synthesize _lastPosition;
 //
 @synthesize view;
 @synthesize dragMode;
@@ -576,15 +573,6 @@
     //[self _removeViewSwipeGesture];
 }
 
--(void)reset
-{
-    [self _removeViewDrageGesture];
-    //[self _removeViewSwipeGesture];
-    [self _initWithVars];
-    [self _allocPanGesture];
-    //[self _allocSwipeGesture];
-}
-
 /*
  * @ 直接左右上下開合 ( toogle open / close )
  */
@@ -619,11 +607,6 @@
             break;
     }
     [self _moveGestureViewWithDistance:_moveDistance isLeftOrRight:_isLeftOrRight];
-}
-
--(void)close
-{
-    [self backToInitialState];
 }
 
 -(void)backToInitialState

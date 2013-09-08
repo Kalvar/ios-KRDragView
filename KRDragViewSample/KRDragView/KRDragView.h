@@ -15,7 +15,6 @@ typedef enum _krDragViewModes
 {
     //兩邊都行( 未補完 )
     krDragViewModeBothLeftAndRight = 0,
-    krDragViewModeBothBottomAndTop,
     //由左至右
     krDragViewModeFromLeftToRight,
     //由右至左
@@ -42,9 +41,7 @@ typedef enum _krDragViewModes
     CGFloat durations;
     //決定是否 Open 的跨越距離
     CGFloat openDistance;
-    //開關 View 後的動作
-    void (^openCompletion) (void);
-    void (^closeCompletion) (void);
+
 }
 
 @property (nonatomic, strong) UIView *view;
@@ -58,9 +55,7 @@ typedef enum _krDragViewModes
 -(id)initWithView:(UIView *)_targetView dragMode:(krDragViewModes)_dragMode;
 -(void)start;
 -(void)stop;
--(void)reset;
 -(void)open;
--(void)close;
 -(void)backToInitialState;
 
 @end
