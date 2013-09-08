@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme
+   version = "1.3">
+   <BuildAction>
+      <BuildActionEntries>
+         <BuildActionEntry
+            buildForRunning = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "8EA3B4BA161ADDA90000E5F5"
+               BuildableName = "KRDragViewSample.app"
+               BlueprintName = "KRDragViewSample"
+               ReferencedContainer = "container:KRDragViewSample.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+   <LaunchAction
+      useCustomWorkingDirectory = "NO"
+      buildConfiguration = "Debug">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "8EA3B4BA161ADDA90000E5F5"
+            BuildableName = "KRDragViewSample.app"
+            BlueprintName = "KRDragViewSample"
+            ReferencedContainer = "container:KRDragViewSample.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+   </LaunchAction>
+</Scheme>
