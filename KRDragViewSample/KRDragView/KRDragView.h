@@ -1,10 +1,11 @@
 //
 //  KRDragView.h
+//  V0.8 beta
 //
 //  ilovekalvar@gmail.com
 //
 //  Created by Kuo-Ming Lin on 12/10/2.
-//  Copyright (c) 2012年 Kuo-Ming Lin. All rights reserved.
+//  Copyright (c) 2012 - 2013 年 Kuo-Ming Lin. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

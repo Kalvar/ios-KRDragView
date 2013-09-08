@@ -55,7 +55,7 @@ KRDragView simulates dragging and sliding the view to show the menu under backgr
 
 ## Version
 
-KRDragView now is V0.7 beta.
+KRDragView now is V0.8 beta.
 
 ## License
 

@@ -1,10 +1,11 @@
 //
 //  KRDragView.m
-//  
+//  V0.8 beta
+//
 //  ilovekalvar@gmail.com
 //
 //  Created by Kuo-Ming Lin on 12/10/2.
-//  Copyright (c) 2012年 Kuo-Ming Lin. All rights reserved.
+//  Copyright (c) 2012 - 2013 年 Kuo-Ming Lin. All rights reserved.
 //
 
 #import "KRDragView.h"
@@ -178,6 +179,16 @@
             {
                 _beforeMovedDistance = _viewCenter.y - self._initialPoints.y;
                 _throughCenter = ( _beforeMovedDistance < -( self.openDistance ) );
+                //如果正在打開 ( 已執行過打開，且目前還是開啟狀態時 )
+                if( self._isOpening )
+                {
+                    //又過中線的話，就會 2 次開啟 Open 狀態，這會造成 Open 被重覆執行的狀態例外
+                    if( _throughCenter )
+                    {
+                        //那就把過中線的判斷取消即可 ( 這樣就會執行 Close 狀態事件 )
+                        _throughCenter = NO;
+                    }
+                }
             }
             else
             {
@@ -192,6 +203,13 @@
             {
                 _beforeMovedDistance = _viewCenter.y - self._initialPoints.y;
                 _throughCenter = ( _beforeMovedDistance > self.openDistance );
+                if( self._isOpening )
+                {
+                    if( _throughCenter )
+                    {
+                        _throughCenter = NO;
+                    }
+                }
             }
             else
             {
