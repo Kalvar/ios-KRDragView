@@ -21,6 +21,7 @@
 #pragma --mark Sample Methods
 -(void)draggingFromTopToBottom
 {
+    //由上往下拖拉
     //krDragViewModeToBottomAllowsDraggingBack mode is dragging the view from top to bottom.
     krDragViews = [[KRDragView alloc] initWithView:self.outView
                                           dragMode:krDragViewModeToBottomAllowsDraggingBack];
@@ -39,6 +40,7 @@
 
 -(void)draggingFromBottomToTop
 {
+    //由下往上拖拉
     //krDragViewModeToTopAllowsDraggingBack mode is dragging the view from bottom to top.
     krDragViews = [[KRDragView alloc] initWithView:self.outView
                                           dragMode:krDragViewModeToTopAllowsDraggingBack];
