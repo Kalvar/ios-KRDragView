@@ -21,6 +21,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+//#error 有 Bugs ... 打不開 = = 待修
+    
     krDragViews = [[KRDragView alloc] initWithView:self.outView
                                            dragMode:krDragViewModeToTopAllowsDraggingBack];
     self.krDragViews.sideInstance   = self.view.frame.size.height; //40.0f;
