@@ -2,6 +2,9 @@
 
 <img src="https://dl.dropbox.com/u/83663874/GitHubs/KRDrageView-1.png" alt="KRDragView" title="KRDragView" style="margin: 20px;" class="center" /> &nbsp;
 <img src="https://dl.dropbox.com/u/83663874/GitHubs/KRDrageView-2.png" alt="KRDragView" title="KRDragView" style="margin: 20px;" class="center" />
+<br />
+<img src="https://dl.dropbox.com/u/83663874/GitHubs/KRDrageView-3.png" alt="KRDragView" title="KRDragView" style="margin: 20px;" class="center" /> &nbsp;
+<img src="https://dl.dropbox.com/u/83663874/GitHubs/KRDrageView-4.png" alt="KRDragView" title="KRDragView" style="margin: 20px;" class="center" />
 
 ## Supports
 
