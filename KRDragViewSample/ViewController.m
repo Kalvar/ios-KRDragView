@@ -18,15 +18,13 @@
 @synthesize krDragViews;
 @synthesize outView;
 
-- (void)viewDidLoad
+#pragma --mark Sample Methods
+-(void)draggingFromTopToBottom
 {
-    [super viewDidLoad];
-    
-//#error 有 Bugs ... 打不開 = = 待修
-    
+    //krDragViewModeToBottomAllowsDraggingBack mode is dragging the view from top to bottom.
     krDragViews = [[KRDragView alloc] initWithView:self.outView
-                                           dragMode:krDragViewModeToTopAllowsDraggingBack];
-    self.krDragViews.sideInstance   = self.view.frame.size.height; //40.0f;
+                                          dragMode:krDragViewModeToBottomAllowsDraggingBack];
+    self.krDragViews.sideInstance   = 80.0f;
     self.krDragViews.durations      = 0.15f;
     //To set the distance of cross central line.
     self.krDragViews.openDistance   = 80.0f; //self.view.frame.size.height / 2;
@@ -37,6 +35,34 @@
         NSLog(@"close");
     };
     [self.krDragViews start];
+}
+
+-(void)draggingFromBottomToTop
+{
+    //krDragViewModeToTopAllowsDraggingBack mode is dragging the view from bottom to top.
+    krDragViews = [[KRDragView alloc] initWithView:self.outView
+                                          dragMode:krDragViewModeToTopAllowsDraggingBack];
+    self.krDragViews.sideInstance   = self.view.frame.size.height;
+    self.krDragViews.durations      = 0.15f;
+    //To set the distance of cross central line.
+    self.krDragViews.openDistance   = 80.0f; //self.view.frame.size.height / 2;
+    self.krDragViews.openCompletion = ^{
+        NSLog(@"open");
+    };
+    self.krDragViews.closeCompletion = ^{
+        NSLog(@"close");
+    };
+    [self.krDragViews start];
+}
+
+#pragma --mark View Recycles
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [self draggingFromTopToBottom];
+    //[self draggingFromBottomToTop];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated

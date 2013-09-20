@@ -15,15 +15,16 @@ KRDragView supports ARC.
 KRDragView simulates dragging and sliding the view to show the menu under background. You can slide the view or drag it to move to show something under itself.
 
 ``` objective-c
-- (void)viewDidLoad
+#pragma --mark Sample Methods
+-(void)draggingFromTopToBottom
 {
-    [super viewDidLoad];
+    //krDragViewModeToBottomAllowsDraggingBack mode is dragging the view from top to bottom.
     krDragViews = [[KRDragView alloc] initWithView:self.outView
-                                           dragMode:krDragViewModeFromLeftToRight];
-    self.krDragViews.sideInstance = 40.0f;
-    self.krDragViews.durations    = 0.15f;
+                                          dragMode:krDragViewModeToBottomAllowsDraggingBack];
+    self.krDragViews.sideInstance   = 80.0f;
+    self.krDragViews.durations      = 0.15f;
     //To set the distance of cross central line.
-    self.krDragViews.openDistance = self.view.frame.size.height / 2; //80.0f
+    self.krDragViews.openDistance   = 80.0f; //self.view.frame.size.height / 2;
     self.krDragViews.openCompletion = ^{
         NSLog(@"open");
     };
@@ -33,9 +34,38 @@ KRDragView simulates dragging and sliding the view to show the menu under backgr
     [self.krDragViews start];
 }
 
+-(void)draggingFromBottomToTop
+{
+    //krDragViewModeToTopAllowsDraggingBack mode is dragging the view from bottom to top.
+    krDragViews = [[KRDragView alloc] initWithView:self.outView
+                                          dragMode:krDragViewModeToTopAllowsDraggingBack];
+    self.krDragViews.sideInstance   = self.view.frame.size.height;
+    self.krDragViews.durations      = 0.15f;
+    //To set the distance of cross central line.
+    self.krDragViews.openDistance   = 80.0f; //self.view.frame.size.height / 2;
+    self.krDragViews.openCompletion = ^{
+        NSLog(@"open");
+    };
+    self.krDragViews.closeCompletion = ^{
+        NSLog(@"close");
+    };
+    [self.krDragViews start];
+}
+
+#pragma --mark View Recycles
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [self draggingFromTopToBottom];
+    //[self draggingFromBottomToTop];
+    
+}
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    //[self.krDragViews start];
 }
 
 -(void)viewWillDisappear:(BOOL)animated

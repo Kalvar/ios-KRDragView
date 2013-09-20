@@ -13,19 +13,19 @@
 //拖拉模式
 typedef enum _krDragViewModes
 {
-    //兩邊都行( 未補完 )
+    //兩邊都行( 未補完 ; None. )
     krDragViewModeBothLeftAndRight = 0,
-    //由左至右
+    //由左至右 ( Left to Right. )
     krDragViewModeFromLeftToRight,
-    //由右至左
+    //由右至左 ( Right to Left. )
     krDragViewModeFromRightToLeft,
-    //由上至下滑
+    //由上至下滑 ( Top to Bottom )
     krDragViewModeFromTopToBottom,
-    //由下至上滑
+    //由下至上滑 ( Bottom to Top. )
     krDragViewModeFromBottomToTop,
-    //由下至上滑，並且允許往回拖拉
+    //由下至上滑，並且允許往回拖拉 ( Bottom to Top, and Drag Back. )
     krDragViewModeToTopAllowsDraggingBack,
-    //由上至下滑，並且允許往回拖拉
+    //由上至下滑，並且允許往回拖拉 ( Top to Bottom, and Drag Back. )
     krDragViewModeToBottomAllowsDraggingBack
 } krDragViewModes;
 

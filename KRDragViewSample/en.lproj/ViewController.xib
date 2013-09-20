@@ -152,7 +152,7 @@
 								<reference key="IBUIFont" ref="350350233"/>
 							</object>
 						</array>
-						<string key="NSFrameSize">{320, 460}</string>
+						<string key="NSFrame">{{-2, 272}, {320, 460}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="541708799"/>
