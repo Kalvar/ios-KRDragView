@@ -6,13 +6,16 @@
 <img src="https://dl.dropbox.com/u/83663874/GitHubs/KRDrageView-3.png" alt="KRDragView" title="KRDragView" style="margin: 20px;" class="center" /> &nbsp;
 <img src="https://dl.dropbox.com/u/83663874/GitHubs/KRDrageView-4.png" alt="KRDragView" title="KRDragView" style="margin: 20px;" class="center" />
 
-## Supports
+#### Podfile
 
-KRDragView supports ARC.
+```ruby
+platform :ios, '7.0'
+pod "KRDragView", "~> 0.8"
+```
 
 ## How To Get Started
 
-KRDragView simulates dragging and sliding the view to show the menu under background. You can slide the view or drag it to move to show something under itself.
+KRDragView simulates dragging and sliding the view to show the menu under background. Like the cards, you could drag the view and release it to move/ show something under itself.
 
 ``` objective-c
 #pragma --mark Sample Methods

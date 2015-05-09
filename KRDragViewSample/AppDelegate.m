@@ -3,7 +3,7 @@
 //  KRDragViewSample
 //
 //  Created by Kalvar on 12/10/2.
-//  Copyright (c) 2012年 Kuo-Ming Lin. All rights reserved.
+//  Copyright (c) 2012年 Kalvar Lin. All rights reserved.
 //
 
 #import "AppDelegate.h"
